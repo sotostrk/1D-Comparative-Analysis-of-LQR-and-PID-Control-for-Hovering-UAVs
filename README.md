@@ -47,7 +47,7 @@ Rewritten as a state-space system:
 
 ### LQR Closed-Loop Response (with wind)
 
-![LQR Response](Hovering_Drone_LQR_PID/figs/Fig_1.png)
+![LQR Response](https://raw.githubusercontent.com/sotostrk/1D-Comparative-Analysis-of-LQR-and-PID-Control-for-Hovering-UAVs/main/figs/Fig_1.png)
 
 - The LQR controller stabilizes the drone quickly, with minimal overshoot
 - Position converges to hover around its equilibrium point (where u ≈ mg), oscillating around ~2.94 meters.
