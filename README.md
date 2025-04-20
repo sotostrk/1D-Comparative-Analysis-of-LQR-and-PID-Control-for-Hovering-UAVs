@@ -6,7 +6,16 @@ A MATLAB simulation comparing LQR and PID controllers for altitude stabilization
 
 ## Objective
 
-Stabilize a vertically falling drone (hovering system) using both LQR and PID controllers. Evaluate their performance under gravity and sinusoidal wind disturbance, and compare control effort (J = ∫u² dt) as a metric of controller efficiency.
+Stabilize a vertically falling drone using two control strategies:
+
+- **LQR**: Stabilizes the system around its natural equilibrium (where thrust balances gravity), with no explicit position reference.
+  - design constraints:
+  - Settling time < 2.5 seconds
+  - Overshoot < 5%
+- **PID**: Tracks a position reference (z = 0) and attempts to bring the drone back to that target over time.
+- Also compare their Control effort (J = ∫u² dt) as a metric of controller efficiency.
+
+> **Note:** Both controllers are tested under gravity and sinusoidal wind disturbance.
 
 ---
 
@@ -14,23 +23,23 @@ Stabilize a vertically falling drone (hovering system) using both LQR and PID co
 
 We model the drone’s vertical motion using Newton’s 2nd Law:
 - m * ẍ = u - mg + F_wind(t)
+  
 Rewritten as a state-space system:
 - x₁ = z (altitude)
 - x₂ = ż (vertical velocity)
 - ẋ₁ = x₂
 - ẋ₂ = (1/m) * (u - mg + F_wind)
 
-Control goal: bring the drone to hover at z = 0 while rejecting wind.
-
 ---
 
 ## Features
 
- LQR gain tuning with Q/R parameter loop search  
- Sinusoidal wind disturbance  
- Custom-built PID controller (manual Euler simulation)  
- Control effort calculation (J = ∫u² dt)  
- Visual comparison of position and control input  
+ - LQR gain tuning with an automated search for the Q and R matrices using a for-loop to find gain values that satisfy the design constraints 
+ - Sinusoidal wind disturbance  
+ - Custom-built PID controller (manual Euler simulation)  
+ - Control effort calculation (J = ∫u² dt)  
+ - Visual comparison of position and control input  
+ 
 
 ---
 
@@ -41,14 +50,14 @@ Control goal: bring the drone to hover at z = 0 while rejecting wind.
 ![LQR Response](Hovering_Drone_LQR_PID/figs/Fig_1.png)
 
 - The LQR controller stabilizes the drone quickly, with minimal overshoot
-- Position converges near the desired hover point despite wind
+- Position converges to hover around its equilibrium point (where u ≈ mg), oscillating around ~2.94 meters.
 - Thrust output oscillates around 0 N, as gravity is compensated directly in the control law
 
 ---
 
 ### PID vs LQR Comparison
 
-![PID vs LQR](Hovering_Drone_LQR_PID/figs/Fig_2.png)
+![PID vs LQR](https://raw.githubusercontent.com/sotostrk/1D-Comparative-Analysis-of-LQR-and-PID-Control-for-Hovering-UAVs/main/figs/Fig_2_updated.png)
 
 - PID exhibits higher overshoot and oscillation  
 - LQR is smoother, more stable, and uses less thrust overall  
@@ -98,21 +107,3 @@ J = ∫ u(t)² dt
 ## Final Notes
 
 This project demonstrates how different control strategies perform in a realistic dynamic environment. While PID is widely used and easy to implement, LQR offers powerful advantages in efficiency, stability, and robustness — especially when disturbances are present.
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
