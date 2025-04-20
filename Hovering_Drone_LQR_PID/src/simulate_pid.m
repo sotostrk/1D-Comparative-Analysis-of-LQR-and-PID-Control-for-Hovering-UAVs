@@ -19,7 +19,7 @@ function [t, x, u] = simulate_pid(x0, T, Kp, Kd, Ki, m, g)
 
         % PID control + gravity compensation
         u(i) = Kp * e + Kd * e_derivative + Ki * e_integral + m * g;
-
+        u(i) = min(max(u(i), 0), 60);
         % System dynamics (Euler integration)
         xdot1 = x(i,2);
         Fw = wind_force(t(i));
